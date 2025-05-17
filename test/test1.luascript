@@ -1,0 +1,9 @@
+// Test
+
+fn add(x:number,y:number) {
+    return x + y
+}
+
+const number: result = add(5,2)
+
+print(result)
