@@ -35,6 +35,15 @@ my code is f*cked up. and i hope a random 45 year old senior coder learns lua an
 
 Yeah and if you want Syntax highlighting. use rust's highlighting.
 
+# How to run
+
+you need lua installed, which you can get from https://www.lua.org or for windows search luabinaries for windows. and make sure you have lua in your enviorment variables.
+then change directory to root of this project and type this in the terminal
+```
+lua main.lua
+```
+this should work. and if you want to test new scripts or make one goto test/test1.luascript and edit it.
+
 # final Message
 i hope someone who is good at coding learns lua and fixes this and commits to me please help if you can. if any way. and commit it to me. or just mail me the code.
 I have added as much as comments i could.
