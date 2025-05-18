@@ -15,8 +15,7 @@ local patterns = {
     punctuation = "^[%[%]%(%){}:,%.]"
 }
 
--- Types for type checking/Regular use
-
+-- Types for type checking / Regular use
 local types = {
     ["number"] = true,
     ["string"] = true,
@@ -24,8 +23,11 @@ local types = {
     ["nil"] = true,
     ["array"] = true,
     ["Class"] = true,
+    ["function"] = true,
+    ["table"] = true,
 }
--- keywords
+
+-- Keywords
 local keywords = {
     ["fn"] = true,
     ["return"] = true,
@@ -47,9 +49,15 @@ local keywords = {
     ["false"] = true,
     ["nil"] = true,
     ["in"] = true,
-    ["new"] = true
+    ["new"] = true,
+    ["break"] = true,
+    ["continue"] = true,
+    ["switch"] = true,
+    ["case"] = true,
+    ["default"] = true,
 }
--- Create seperate Lexer
+
+-- Create separate Lexer
 function Lexer.new(source)
     local self = setmetatable({}, Lexer)
     self.source = source
@@ -59,16 +67,16 @@ function Lexer.new(source)
     self.col = 1
     return self
 end
--- Self explanitory
+
 function Lexer:is_at_end()
-    return self.pos > self.len -- If position is greater then length of the source code. return true if not false.
+    return self.pos > self.len
 end
 
-function Lexer:peek(n) -- This function takes a peek.
-    n = n or 0 -- if theres no n specified, use a default value of 0
-    return self.source:sub(self.pos + n, self.pos + n) --Slice the source, start slice at current pos plus n
+function Lexer:peek(n)
+    n = n or 0
+    return self.source:sub(self.pos + n, self.pos + n)
 end
---Nevermind, i guess you must be smart enough to guess it on your own. Unless nessisary
+
 function Lexer:advance(n)
     n = n or 1
     for i = 1, n do
@@ -141,7 +149,7 @@ function Lexer:next_token()
         end
     end
 
-    -- Check for the concatonation operator ".."
+    -- Check for the concatenation operator ".."
     local concat_op = self:match_pattern(patterns.operator_concat)
     if concat_op then
         self:advance(#concat_op)
@@ -162,11 +170,9 @@ function Lexer:next_token()
         return { type = "punctuation", value = punct }
     end
 
-    -- If no pattern matches, error on unknown char
     error("Unexpected character '" .. c .. "' at line " .. self.line)
 end
 
--- Tokenize entire source and return token list
 function Lexer:tokenize()
     local tokens = {}
     while true do

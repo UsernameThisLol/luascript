@@ -1,8 +1,7 @@
+local number: health = 100
 
-fn add(x:number,y:number) {
-    return x + y
+if health == 0 {
+    print("You died!")
 }
 
-const number: result = add(5,2)
-
-print(result)
+number = number - 100

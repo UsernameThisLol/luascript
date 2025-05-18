@@ -37,7 +37,14 @@ local function main()
     end
     io.write("\n")
   end)
-
+  interpreter:add_builtin("skibidi", function(...)
+    local args = {...}
+    for i=1,#args do
+      io.write(tostring(args[i]))
+      if i < #args then io.write("\t") end
+    end
+    io.write("\n")
+  end)
   -- Execute
   local status, err = pcall(function()
     interpreter:evaluate(ast)
